@@ -20,6 +20,8 @@ abstract class Request
      */
     public static function request($request, $output_format = "xml", $decode_json = false)
     {
+        \RESO\RESO::logMessage("Sending request '".$request."' to RESO API.");
+
         // Get variables
         $api_request_url = \RESO\RESO::getAPIRequestUrl();
         $token = \RESO\RESO::getAccessToken();
@@ -56,5 +58,47 @@ abstract class Request
         }
 
         return $return;
+    }
+
+    /**
+     * Requests RESO API output and saves the output to file.
+     *
+     * @param string $file_name
+     * @param string $request
+     * @param string $output_format
+     * @param bool $overwrite
+     *
+     * @return True / false output saved to file.
+     */
+    public static function requestToFile($file_name, $request, $output_format = "xml", $overwrite = false) {
+        \RESO\RESO::logMessage("Sending request '".$request."' to RESO API and storing output to file '".$file_name."'.");
+
+        if(!$overwrite && is_file($file_name)) {
+            throw new Error\Reso("File '".$file_name."' already exists. Use variable 'overwrite' to overwrite the output file.");
+        }
+
+        if(!is_dir(dirname($file_name))) {
+            throw new Error\Reso("Directory '".dir($file_name)."' does not exist.");
+        }
+
+        $output_data = self::request($request, $output_format, false);
+        if(!$output_data) {
+            \RESO\RESO::logMessage("Request output save to file failed - empty or erroneous data.");
+            return false;
+        }
+
+        file_put_contents($file_name, $output_data);
+        if(!is_file($file_name)) {
+            \RESO\RESO::logMessage("Request output save to file failed - could not create output file.");
+            return false;
+        }
+
+        \RESO\RESO::logMessage("Request output save to file succeeded.");
+        return true;
+    }
+
+    public static function requestMetadata() {
+        \RESO\RESO::logMessage("Requesting resource metadata.");
+        return self::request("\$metadata");
     }
 }

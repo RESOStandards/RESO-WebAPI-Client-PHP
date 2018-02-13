@@ -6,13 +6,7 @@ use Exception;
 
 abstract class Base extends Exception
 {
-    public function __construct(
-        $message,
-        $httpStatus = null,
-        $httpBody = null,
-        $jsonBody = null,
-        $httpHeaders = null
-    ) {
+    public function __construct($message, $httpStatus = null, $httpBody = null, $jsonBody = null, $httpHeaders = null) {
         parent::__construct($message);
         $this->httpStatus = $httpStatus;
         $this->httpBody = $httpBody;
@@ -23,6 +17,8 @@ abstract class Base extends Exception
         if ($httpHeaders && isset($httpHeaders['Request-Id'])) {
             $this->requestId = $httpHeaders['Request-Id'];
         }
+
+        \RESO\RESO::logMessage("EXCEPTION: ".$message);
     }
 
     public function getHttpStatus()

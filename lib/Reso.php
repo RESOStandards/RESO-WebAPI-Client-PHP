@@ -2,6 +2,7 @@
 
 namespace RESO;
 
+use RESO\Log;
 use RESO\Error;
 
 /**
@@ -32,6 +33,18 @@ class RESO
     // @var string RESO API PHP SDK version.
     public static $apiSdkVersion = '1.0.0';
 
+    // @var bool Logging (overall) enabled / disabled.
+    public static $logEnabled = false;
+
+    // @var bool Logging to console enabled / disabled.
+    public static $logToConsole = true;
+
+    // @var bool Logging to file enabled / disabled.
+    public static $logToFile = false;
+
+    // @var string Log file name enabled / disabled.
+    public static $logFileName = 'out.log';
+
     /**
      * @return string The RESO API client_id used for auth and query requests.
      */
@@ -48,6 +61,7 @@ class RESO
      */
     public static function setClientId($clientId)
     {
+        self::logMessage("Setting RESO API client id to '".$clientId."'.");
         self::$clientId = $clientId;
     }
 
@@ -67,6 +81,7 @@ class RESO
      */
     public static function setClientSecret($clientSecret)
     {
+        self::logMessage("Setting RESO API client secret.");
         self::$clientSecret = $clientSecret;
     }
 
@@ -85,6 +100,7 @@ class RESO
      */
     public static function setAccessToken($accessToken)
     {
+        self::logMessage("Setting RESO API access token.");
         self::$accessToken = $accessToken;
     }
 
@@ -104,6 +120,7 @@ class RESO
      */
     public static function setAPIAuthUrl($apiAuthUrl)
     {
+        self::logMessage("Setting RESO API auth URL to '".$apiAuthUrl."'.");
         self::$apiAuthUrl = $apiAuthUrl;
     }
 
@@ -123,6 +140,7 @@ class RESO
      */
     public static function setAPIRequestUrl($apiRequestUrl)
     {
+        self::logMessage("Setting RESO API request URL to '".$apiRequestUrl."'.");
         self::$apiRequestUrl = $apiRequestUrl;
     }
 
@@ -146,10 +164,84 @@ class RESO
     /**
      * Sets true / false to verify SSL certs in cURL requests.
      *
-     * @param boolean $verify
+     * @param boolean $bool
      */
-    public static function setVerifySslCerts($verify)
+    public static function setVerifySslCerts($bool)
     {
-        self::$verifySslCerts = $verify;
+        self::logMessage("Setting SSL certificate verification to '".(string)$bool."'.");
+        self::$verifySslCerts = $bool;
+    }
+
+    /**
+     * @return boolean True / false if logging (overall) is enabled.
+     */
+    public static function getLogEnabled() {
+        return self::$logEnabled;
+    }
+
+    /**
+     * Sets true / false to enable logging (overall).
+     *
+     * @param boolean $bool
+     */
+    public static function setLogEnabled($bool) {
+        self::$logEnabled = $bool;
+    }
+
+    /**
+     * @return boolean True / false if output logging to console.
+     */
+    public static function getLogConsole() {
+        return self::$logToConsole;
+    }
+
+    /**
+     * Sets true / false to enable logging to console.
+     *
+     * @param boolean $bool
+     */
+    public static function setLogConsole($bool) {
+        self::$logToConsole = $bool;
+    }
+
+    /**
+     * @return boolean True / false if output logging to file.
+     */
+    public static function getLogFile() {
+        return self::$logToFile;
+    }
+
+    /**
+     * Sets true / false to enable logging to file.
+     *
+     * @param boolean $bool
+     */
+    public static function setLogFile($bool) {
+        self::$logToFile = $bool;
+    }
+
+    /**
+     * @return string File path of the log file (if logging to file).
+     */
+    public static function getLogFileName() {
+        return self::$logFileName;
+    }
+
+    /**
+     * Sets log file name (if logging to file).
+     *
+     * @param string $file_name
+     */
+    public static function setLogFileName($file_name) {
+        self::$logFileName = $file_name;
+    }
+
+    /**
+     * Logs message.
+     *
+     * @param string $message
+     */
+    public static function logMessage($message) {
+        Log\Log::logMessage($message);
     }
 }
