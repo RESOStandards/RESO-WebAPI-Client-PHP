@@ -70,7 +70,7 @@ Several usage examples are provided in the [`examples/`](https://github.com/RESO
 
 To configure the example app variables / settings - copy the config.php file in each example application as _config.php and edit the variables accordingly.
 
-### Configuring a Logger
+## Configuring a Logger
 
 The SDK has a built-in logger for debug / testing purposes. Usage:
 
