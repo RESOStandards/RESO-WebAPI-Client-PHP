@@ -46,7 +46,7 @@ class CurlClient implements ClientInterface
         $this->defaultOptions = $defaultOptions;
         $this->initUserAgentInfo();
 
-        self::$isCurlAvailable = extension_loaded("dom");
+        self::$isCurlAvailable = extension_loaded("curl");
 
         if (!self::$isCurlAvailable) {
             throw new Error\Reso("It looks like the cURL extension is not enabled. " .

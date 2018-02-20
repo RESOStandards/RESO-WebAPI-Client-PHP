@@ -10,7 +10,7 @@ abstract class Request
     private static $validOutputFormats = array("json", "xml");
 
     /**
-     * Sends request and returns output in specified format.
+     * Sends GET request and returns output in specified format.
      *
      * @param string $request
      * @param string $output_format
@@ -61,6 +61,48 @@ abstract class Request
     }
 
     /**
+     * Sends POST request with specified parameters.
+     *
+     * @param string $request
+     * @param array $params
+     *
+     * @return mixed API Request response.
+     */
+    public static function requestPost($request, $params = array())
+    {
+        \RESO\RESO::logMessage("Sending POST request '".$request."' to RESO API.");
+
+        // Get variables
+        $api_request_url = \RESO\RESO::getAPIRequestUrl();
+        $token = \RESO\RESO::getAccessToken();
+
+        $curl = new \RESO\HttpClient\CurlClient();
+
+        // Build request URL
+        $url = $api_request_url . $request;
+
+        $headers = array(
+            'Accept: application/json',
+            'Authorization: Bearer '.$token
+        );
+
+        // Send request
+        $response = $curl->request("post", $url, $headers, $params, false);
+        if(!$response || !is_array($response) || $response[1] != 200)
+            throw new Error\Api("Could not retrieve API response. Request URL: ".$api_request_url."; Request string: ".$request."; Response: ".$response[0]);
+
+        // Decode the JSON response
+        $is_json = Util\Util::isJson($response[0]);
+        if($is_json) {
+            $return = json_decode($response[0], true);
+        } else {
+            $return = $response[0];
+        }
+
+        return $return;
+    }
+
+    /**
      * Requests RESO API output and saves the output to file.
      *
      * @param string $file_name
@@ -97,6 +139,11 @@ abstract class Request
         return true;
     }
 
+    /**
+     * Requests RESO API metadata output.
+     *
+     * @return Metadata  request output.
+     */
     public static function requestMetadata() {
         \RESO\RESO::logMessage("Requesting resource metadata.");
         return self::request("\$metadata");
