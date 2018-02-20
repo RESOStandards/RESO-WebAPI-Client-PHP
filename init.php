@@ -1,7 +1,12 @@
 <?php
 
+// Core
 require(dirname(__FILE__) . '/lib/Reso.php');
 require(dirname(__FILE__) . '/lib/Util/Util.php');
+
+// Logging
+require(dirname(__FILE__) . '/lib/Log/Base.php');
+require(dirname(__FILE__) . '/lib/Log/Log.php');
 
 // HttpClient
 require(dirname(__FILE__) . '/lib/HttpClient/ClientInterface.php');
