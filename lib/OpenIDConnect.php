@@ -7,6 +7,9 @@ use RESO\Util;
 
 class OpenIDConnect
 {
+    public static $validInputNamesUsername = array("username", "j_username", "user", "email");
+    public static $validInputNamesPassword = array("password", "j_password", "pass");
+
     /**
      * Autheticates user to the RESO API endpoint and returns authorization code.
      *
@@ -28,7 +31,7 @@ class OpenIDConnect
         $curl = new \RESO\HttpClient\CurlClient();
 
         // Build auth request URL
-        $url = $api_auth_url . "authorize";
+        $url = rtrim($api_auth_url, "/") . "/authorize";
 
         // Authentication request parameters
         $params = array(
@@ -40,27 +43,51 @@ class OpenIDConnect
 
         // Request authentication
         $response = $curl->request("get", $url, null, $params, false)[0];
-
-        // Convert the modelJson response to array
-        $response_array = @Util\Util::extractModelJson($response);
-        if(!$response_array || !is_array($response_array) || !isset($response_array["antiForgery"]) || !isset($response_array["loginUrl"]))
-            throw new Error\Api("Could not authenticate to the RESO API auth.");
+        $params = @Util\Util::extractFormParameters($response);
 
         // Do login form POST
         // Build login URL
         $parsed_url = parse_url($api_auth_url);
-        $url = $parsed_url["scheme"]."://" .$parsed_url["host"] . $response_array["loginUrl"];
+        if(stripos($params["url"], "{{model.loginUrl}}") !== FALSE) {
+            $modelJson = @Util\Util::extractModelJson($response);
+            if(!$modelJson || !is_array($modelJson) || !isset($modelJson))
+                throw new Error\Api("Could not authenticate to the RESO API auth.");
+            $url = $parsed_url["scheme"]."://" .$parsed_url["host"] . $modelJson["loginUrl"];
+            foreach($modelJson as $key => $value) {
+                if($key == "loginUrl") {
+                    continue;
+                } else if($key == "antiForgery") {
+                    $params["inputs"][$value["name"]] = $value["value"];
+                } else {
+                    $params["inputs"][$key] = $value;
+                }
+            }
+        } else {
+            if (strpos($params["url"], "://") !== FALSE) {
+                $url = $params["url"];
+            } else {
+                $url = $parsed_url["scheme"] . "://" . $parsed_url["host"] . $params["url"];
+            }
+        }
 
-        // Login parameters
-        $params = array(
-            $response_array["antiForgery"]["name"] => $response_array["antiForgery"]["value"],
-            "username" => $username,
-            "password" => $password
-        );
+        // Check if we have valid login url
+        if(!parse_url($url))
+            throw new Error\Api("Could not obtain RESO API login URL from the response.");
+        $params["url"] = $url;
+
+        // Fill in Login parameters
+        foreach($params["inputs"] as $key => $value) {
+            if($value) continue;
+            if(in_array($key, self::$validInputNamesUsername)) {
+                $params["inputs"][$key] = $username;
+            } else if(in_array($key, self::$validInputNamesPassword) ) {
+                $params["inputs"][$key] = $password;
+            }
+        }
         $headers = array("Content-Type: application/x-www-form-urlencoded");
 
         // Request login
-        $response_curl_info = $curl->request("post", $url, $headers, $params, false)[3];
+        $response_curl_info = $curl->request("post", $url, $headers, $params["inputs"], false)[3];
 
         // Extract code
         $auth_code = @Util\Util::extractCode($response_curl_info["url"]);
@@ -94,7 +121,7 @@ class OpenIDConnect
         $curl = new \RESO\HttpClient\CurlClient();
 
         // Build token request URL
-        $url = $api_auth_url . "token";
+        $url = rtrim($api_auth_url, "/") . "/token";
         $headers = array(
             'Authorization: Basic '.base64_encode($client_id.":".$client_secret)
         );

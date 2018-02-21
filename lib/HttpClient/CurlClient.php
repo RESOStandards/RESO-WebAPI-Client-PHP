@@ -52,11 +52,19 @@ class CurlClient implements ClientInterface
             throw new Error\Reso("It looks like the cURL extension is not enabled. " .
                 "cURL extension is required to use the RESO API PHP SDK.");
         }
+
+        if(file_exists($this->cookieFile)) {
+            unlink($this->cookieFile);
+        }
     }
 
     public function __destruct() {
         if($this->curl) {
             $this->close();
+        }
+
+        if(file_exists($this->cookieFile)) {
+            unlink($this->cookieFile);
         }
     }
 

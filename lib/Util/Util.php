@@ -65,6 +65,27 @@ abstract class Util
     }
 
     /**
+     * @param string $response_body HTML response with login form.
+     *
+     * @return array Form parameters and input field names and values.
+     */
+    public static function extractFormParameters($response_body) {
+        $dom = new \DOMDocument();
+        $returnArray = array();
+        if(@$dom->loadHTML($response_body)) {
+            $form = $dom->getelementsbytagname('form')[0];
+            $returnArray["url"] = $form->getAttribute('action');
+            $returnArray["method"] = $form->getAttribute('method');
+            $returnArray["inputs"] = array();
+            $inputs = $dom->getelementsbytagname('input');
+            foreach ($inputs as $input) {
+                $returnArray["inputs"][$input->getAttribute('name')] = $input->getAttribute('value');
+            }
+        }
+        return $returnArray;
+    }
+
+    /**
      * @param array $arr A map of param keys to values.
      * @param string|null $prefix
      *
