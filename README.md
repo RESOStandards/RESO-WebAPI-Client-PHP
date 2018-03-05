@@ -81,3 +81,13 @@ RESO\RESO::setLogConsole(true); // enables log messages to console.
 RESO\RESO::setLogFile(true); // enabled log messages to be written to log file.
 
 ```
+
+## Unit Tests
+
+The SDK code set contains PHPUnit tests. The tests reside in the [`tests/`](https://github.com/RESO-RETS/RESOWebAPIReferenceClientinPHP/tree/master/tests) folder and covers core RESO PHP SDK functionality testing.
+
+To run the tests duplicate the tests/config.php file to tests/_config.php and set the appropriate API variables. Then, execute:
+
+```
+./vendor/bin/phpunit --bootstrap init.php tests/
+```
