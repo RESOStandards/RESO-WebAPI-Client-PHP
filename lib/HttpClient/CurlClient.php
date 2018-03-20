@@ -17,6 +17,7 @@ class CurlClient implements ClientInterface
     private $cookieFile = ".resocookie";
     const DEFAULT_TIMEOUT = 80;
     const DEFAULT_CONNECT_TIMEOUT = 30;
+    const SDK_VERSION = '1.0.0';
     private $timeout = self::DEFAULT_TIMEOUT;
     private $connectTimeout = self::DEFAULT_CONNECT_TIMEOUT;
 
@@ -73,7 +74,8 @@ class CurlClient implements ClientInterface
         $curlVersion = curl_version();
         $this->userAgentInfo = array(
             'httplib' =>  'curl ' . $curlVersion['version'],
-            'ssllib' => $curlVersion['ssl_version'],
+            'ssllib'  => $curlVersion['ssl_version'],
+            'sdkInfo' => "RESO-RETS-SDK/" . self::SDK_VERSION
         );
     }
 
