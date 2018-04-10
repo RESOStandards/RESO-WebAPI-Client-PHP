@@ -34,6 +34,9 @@ abstract class Request
 
         $curl = new \RESO\HttpClient\CurlClient();
 
+        // Parse and validate request parameters
+        $request = self::formatRequestParameters($request);
+
         // Build request URL
         $url = rtrim($api_request_url, "/") . "/" . $request;
 
@@ -182,11 +185,30 @@ abstract class Request
     /**
      * Sets accept Accept content type in all requests.
      *
-     * @param string $file_name
+     * @param string
      */
     public static function setAcceptType($type = "") {
         if(in_array($type, self::$validOutputFormats)) {
             self::$requestAcceptType = $type;
         }
+    }
+
+    /**
+     * Formats request parameters to compatible string
+     *
+     * @param string
+     */
+    public static function formatRequestParameters($parameters_string) {
+        parse_str($parameters_string, $parsed);
+        if(!is_array($parsed) || empty($parsed)) {
+            throw new Error\Reso("Could not parse the request parameters.");
+        }
+
+        $params = array();
+        foreach($parsed as $key => $param) {
+            $params[] = $key."=".rawurlencode($param);
+        }
+
+        return implode("&", $params);
     }
 }
