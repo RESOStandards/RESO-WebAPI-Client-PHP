@@ -11,6 +11,7 @@ final class RequestTest extends TestCase
         RESO\RESO::setClientId($client_id);
         RESO\RESO::setClientSecret($client_secret);
         RESO\RESO::setAPIAuthUrl($api_auth_url);
+        RESO\RESO::setAPITokenUrl($api_token_url);
         RESO\RESO::setAPIRequestUrl($api_request_url);
         $auth_code = RESO\OpenIDConnect::authorize($auth_username, $auth_password, $redirect_uri, $scope);
         RESO\RESO::setAccessToken(RESO\OpenIDConnect::requestAccessToken($auth_code, $redirect_uri, $scope));
@@ -27,6 +28,7 @@ final class RequestTest extends TestCase
         RESO\RESO::setClientId($client_id);
         RESO\RESO::setClientSecret($client_secret);
         RESO\RESO::setAPIAuthUrl($api_auth_url);
+        RESO\RESO::setAPITokenUrl($api_token_url);
         RESO\RESO::setAPIRequestUrl($api_request_url);
         $auth_code = RESO\OpenIDConnect::authorize($auth_username, $auth_password, $redirect_uri, $scope);
         RESO\RESO::setAccessToken(RESO\OpenIDConnect::requestAccessToken($auth_code, $redirect_uri, $scope));

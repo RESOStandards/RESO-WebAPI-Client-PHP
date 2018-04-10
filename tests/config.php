@@ -3,6 +3,9 @@
 // API authentication URL
 $api_auth_url = "";
 
+// API token URL
+$api_token_url = "";
+
 // API data request (web) URL
 $api_request_url = "";
 

@@ -206,7 +206,11 @@ abstract class Request
 
         $params = array();
         foreach($parsed as $key => $param) {
-            $params[] = $key."=".rawurlencode($param);
+            if($param) {
+                $params[] = $key . "=" . rawurlencode($param);
+            } else {
+                $params[] = $key;
+            }
         }
 
         return implode("&", $params);
