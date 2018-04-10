@@ -9,7 +9,11 @@ require_once(dirname(__FILE__) . '/config.php');
 RESO\RESO::setClientId($client_id);
 RESO\RESO::setClientSecret($client_secret);
 RESO\RESO::setAPIAuthUrl($api_auth_url);
+RESO\RESO::setAPITokenUrl($api_token_url);
 RESO\RESO::setAPIRequestUrl($api_request_url);
+
+// Set the Accept header (if needed)
+RESO\Request::setAcceptType("json");
 
 // Print head layout
 echo '<html>

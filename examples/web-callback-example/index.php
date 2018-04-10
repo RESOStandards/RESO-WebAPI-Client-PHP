@@ -8,6 +8,7 @@ require_once("config.php");
 RESO\RESO::setClientId($client_id);
 RESO\RESO::setClientSecret($client_secret);
 RESO\RESO::setAPIAuthUrl($api_auth_url);
+RESO\RESO::setAPITokenUrl($api_token_url);
 
 // Redirect user to login page
 header("Location: ".RESO\OpenIDConnect::getLoginUrl($redirect_uri, $scope));

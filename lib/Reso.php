@@ -21,8 +21,11 @@ class RESO
     // @var string The RESO API access token.
     public static $accessToken;
 
-    // @var string The base URL for RESO API Auth service.
+    // @var string The authentication / authorization URL for RESO API Auth service.
     public static $apiAuthUrl = '';
+
+    // @var string The token request URL for RESO API Auth service.
+    public static $apiTokenUrl = '';
 
     // @var string The base URL for RESO API Request service.
     public static $apiRequestUrl = '';
@@ -122,6 +125,26 @@ class RESO
     {
         self::logMessage("Setting RESO API auth URL to '".$apiAuthUrl."'.");
         self::$apiAuthUrl = $apiAuthUrl;
+    }
+
+    /**
+     * @return string The RESO API token endpoint URL.
+     */
+    public static function getAPITokenUrl()
+    {
+        if(!self::$apiTokenUrl) throw new Error\Reso("API token endpoint URL is not set.");
+        return self::$apiTokenUrl;
+    }
+
+    /**
+     * Sets the RESO API token endpoint URL.
+     *
+     * @param string $apiTokenUrl
+     */
+    public static function setAPITokenUrl($apiTokenUrl)
+    {
+        self::logMessage("Setting RESO API token URL to '".$apiTokenUrl."'.");
+        self::$apiTokenUrl = $apiTokenUrl;
     }
 
     /**

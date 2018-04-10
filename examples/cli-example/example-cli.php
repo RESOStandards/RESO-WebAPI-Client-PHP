@@ -14,6 +14,7 @@ RESO\RESO::setLogFile(true);
 RESO\RESO::setClientId($client_id);
 RESO\RESO::setClientSecret($client_secret);
 RESO\RESO::setAPIAuthUrl($api_auth_url);
+RESO\RESO::setAPITokenUrl($api_token_url);
 RESO\RESO::setAPIRequestUrl($api_request_url);
 
 // Authorize user
@@ -22,8 +23,17 @@ $auth_code = RESO\OpenIDConnect::authorize($auth_username, $auth_password, $redi
 // Get access token
 RESO\RESO::setAccessToken(RESO\OpenIDConnect::requestAccessToken($auth_code, $redirect_uri, $scope));
 
+// Set the Accept header (if needed)
+RESO\Request::setAcceptType("json");
+
 // Retrieve metadata from RESO API
-//$data = RESO\Request::requestMetadata();
+/*
+$data = RESO\Request::requestMetadata();
+// Print Metadata
+echo "\nMetadata:\n\n";
+print_r($data);
+echo "\n\n";
+*/
 
 // Retrieve top 10 properties from the RESO API endpoint
 $data = RESO\Request::request("Property?\$top=10", "json", true);

@@ -30,9 +30,6 @@ class OpenIDConnect
 
         $curl = new \RESO\HttpClient\CurlClient();
 
-        // Build auth request URL
-        $url = rtrim($api_auth_url, "/") . "/authorize";
-
         // Authentication request parameters
         $params = array(
             "client_id" => $client_id,
@@ -42,7 +39,7 @@ class OpenIDConnect
         );
 
         // Request authentication
-        $response = $curl->request("get", $url, null, $params, false)[0];
+        $response = $curl->request("get", $api_auth_url, null, $params, false)[0];
         $params = @Util\Util::extractFormParameters($response);
 
         // Do login form POST
@@ -114,14 +111,12 @@ class OpenIDConnect
         \RESO\RESO::logMessage("Sending authorization request to retrieve access token.");
 
         // Get variables
-        $api_auth_url = \RESO\RESO::getAPIAuthUrl();
+        $api_token_url = \RESO\RESO::getAPITokenUrl();
         $client_id = \RESO\RESO::getClientId();
         $client_secret = \RESO\RESO::getClientSecret();
 
         $curl = new \RESO\HttpClient\CurlClient();
 
-        // Build token request URL
-        $url = rtrim($api_auth_url, "/") . "/token";
         $headers = array(
             'Authorization: Basic '.base64_encode($client_id.":".$client_secret)
         );
@@ -132,7 +127,7 @@ class OpenIDConnect
             "code" => $auth_code
         );
 
-        $response = json_decode($curl->request("post", $url, $headers, $params, false)[0], true);
+        $response = json_decode($curl->request("post", $api_token_url, $headers, $params, false)[0], true);
         if(!$response || !is_array($response) || !isset($response["access_token"]))
             throw new Error\Api("Failed to obtain access token.");
 
@@ -150,14 +145,12 @@ class OpenIDConnect
 
         // Get variables
         $access_token = \RESO\RESO::getAccessToken();
-        $api_auth_url = \RESO\RESO::getAPIAuthUrl();
+        $api_token_url = \RESO\RESO::getAPITokenUrl();
         $client_id = \RESO\RESO::getClientId();
         $client_secret = \RESO\RESO::getClientSecret();
 
         $curl = new \RESO\HttpClient\CurlClient();
 
-        // Build token request URL
-        $url = $api_auth_url . "token";
         $headers = array(
             'Authorization: Basic '.base64_encode($client_id.":".$client_secret)
         );
@@ -166,7 +159,7 @@ class OpenIDConnect
             "refresh_token" => $access_token
         );
 
-        $response = json_decode($curl->request("post", $url, $headers, $params, false)[0], true);
+        $response = json_decode($curl->request("post", $api_token_url, $headers, $params, false)[0], true);
         if(!$response || !is_array($response) || !isset($response["refresh_token"]))
             throw new Error\Api("Failed to refresh token.");
 
@@ -187,9 +180,6 @@ class OpenIDConnect
         $api_auth_url = \RESO\RESO::getAPIAuthUrl();
         $client_id = \RESO\RESO::getClientId();
 
-        // Build auth request URL
-        $url = $api_auth_url . "authorize";
-
         // Authentication request parameters
         $params = array(
             "client_id" => $client_id,
@@ -198,6 +188,6 @@ class OpenIDConnect
             "response_type" => "code"
         );
 
-        return $url . '?' . http_build_query($params);
+        return $api_auth_url . '?' . http_build_query($params);
     }
 }

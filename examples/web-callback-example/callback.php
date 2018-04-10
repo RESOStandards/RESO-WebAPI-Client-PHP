@@ -7,6 +7,7 @@ require_once("config.php");
 // Set variables
 RESO\RESO::setClientId($client_id);
 RESO\RESO::setClientSecret($client_secret);
+RESO\RESO::setAPITokenUrl($api_token_url);
 RESO\RESO::setAPIRequestUrl($api_request_url);
 
 if($_GET['code']) {
