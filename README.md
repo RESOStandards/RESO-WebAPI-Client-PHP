@@ -1,6 +1,6 @@
-# RESO API PHP SDK
+# RESO WebAPI Client PHP SDK
 
-The RESO API SDK for PHP allows developers to build applications with RESO API queries for listing data retrieval. More information at http://www.reso.org
+The RESO WebAPI Client PHP SDK for PHP allows developers to build applications with RESO API queries for listing data retrieval. More information at http://www.reso.org
 
 ## Requirements
 
@@ -30,7 +30,7 @@ require_once('/path/to/reso-php-sdk/init.php');
 
 ## Dependencies
 
-The following PHP extensions are required for all the RESO API SDK functions to work properly:
+The following PHP extensions are required for all the RESO WebAPI Client PHP SDK functions to work properly:
 
 - [`curl`](https://secure.php.net/manual/en/book.curl.php)
 - [`json`](https://secure.php.net/manual/en/book.json.php)
@@ -87,10 +87,14 @@ RESO\RESO::setLogFile(true); // enabled log messages to be written to log file.
 
 ## Unit Tests
 
-The SDK code set contains PHPUnit tests. The tests reside in the [`tests/`](https://github.com/RESO-RETS/RESOWebAPIReferenceClientinPHP/tree/master/tests) folder and covers core RESO PHP SDK functionality testing.
+The SDK code set contains PHPUnit tests. The tests reside in the [`tests/`](https://github.com/RESO-RETS/RESOWebAPIReferenceClientinPHP/tree/master/tests) folder and covers core RESO WebAPI Client PHP SDK functionality testing.
 
 To run the tests duplicate the tests/config.php file to tests/_config.php and set the appropriate API variables. Then, execute:
 
 ```
 ./vendor/bin/phpunit --bootstrap init.php tests/
 ```
+
+## Contributing
+
+Please read the [contributing guidelines](CONTRIBUTING.md) if You are interested in contributing to the project.
