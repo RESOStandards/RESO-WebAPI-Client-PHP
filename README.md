@@ -1,3 +1,10 @@
+# DEPRECATION NOTICE
+RESO is no longer maintaining or supporting this codebase.
+
+If you are actively using this library and would like to "adopt" it, please contact dev@reso.org
+
+This repository will be made private after August 1, 2021.
+
 # RESO WebAPI Client PHP SDK
 
 The RESO WebAPI Client PHP SDK for PHP allows developers to build applications with RESO API queries for listing data retrieval. For more information on the Real Estate Standards Organization (RESO) please visit [www.reso.org](http://www.reso.org) or contact [github@reso.org](mailto:github@reso.org). Developers wishing to better understand how to use and contribute to our standards visit [RESO Developers FAQ](https://www.reso.org/developer-faqs/working-with-github/).
