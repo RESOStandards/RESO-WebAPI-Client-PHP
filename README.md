@@ -1,12 +1,9 @@
-# DEPRECATION NOTICE
-RESO is no longer maintaining or supporting this codebase.
+# Overview
+The goal of this library is to allow developers to make basic Web API requests using HTTP and OAuth2. Those who need to parse OData metadata will need to add additional handling the OASIS XSD format. 
 
-Developers should be using popular OAuth2 and HTTP libraries specific to their platforms instead.
+See [RESO's Web API Core specification](https://github.com/RESOStandards/reso-web-api-specifications#web-api-core-endorsement) for more information about which queries servers should support.
 
-If you are actively using this library and would like to "adopt" it, please contact dev@reso.org.
-
-This repository will be made private after August 1, 2021.
-
+Note that RESO is not currently maintaining this codebase, but contributions are welcome. Please open a pull request and it will be reviewed and merged.
 
 # RESO WebAPI Client PHP SDK
 
