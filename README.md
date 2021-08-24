@@ -1,5 +1,5 @@
 # Overview
-The goal of this library is to allow developers to make basic Web API requests using HTTP and OAuth2. Those who need to parse OData metadata will need to add additional handling the OASIS XSD format. 
+The goal of this library is to allow developers to make basic Web API requests using HTTP and OAuth2. Those who need to parse OData metadata will need to add additional handling for the [OData XML Metadata format](https://docs.oasis-open.org/odata/odata-csdl-xml/v4.01/os/schemas/).
 
 See [RESO's Web API Core specification](https://github.com/RESOStandards/reso-web-api-specifications#web-api-core-endorsement) for more information about which queries servers should support.
 
