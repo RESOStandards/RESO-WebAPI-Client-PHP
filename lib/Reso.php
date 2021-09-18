@@ -48,6 +48,23 @@ class Reso
     // @var string Log file name enabled / disabled.
     public static $logFileName = 'out.log';
 
+    // @var string dataset
+    public static $dataset = '';
+
+    /**
+     * @return string
+     */
+    public static function getDataset() {
+        return self::$dataset;
+    }
+
+    /**
+     * @param string $dataset
+     */
+    public static function setDataset($dataset) {
+        self::$dataset = $dataset;
+    }
+
     /**
      * @return string The RESO API client_id used for auth and query requests.
      */
