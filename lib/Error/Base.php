@@ -18,7 +18,7 @@ abstract class Base extends Exception
             $this->requestId = $httpHeaders['Request-Id'];
         }
 
-        \RESO\RESO::logMessage("EXCEPTION: ".$message);
+        \RESO\Reso::logMessage("EXCEPTION: ".$message);
     }
 
     public function getHttpStatus()

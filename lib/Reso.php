@@ -10,7 +10,7 @@ use RESO\Error;
  *
  * @package RESO
  */
-class RESO
+class Reso
 {
     // @var string The RESO API client_id to be used for auth and query requests.
     public static $clientId;

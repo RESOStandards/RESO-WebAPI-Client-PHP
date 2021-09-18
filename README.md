@@ -54,15 +54,15 @@ Simple usage looks like:
 
 ```php
 // Set the variables
-RESO\RESO::setClientId('YOUR_CLIENT_ID');
-RESO\RESO::setClientSecret('YOUR_CLIENT_SECRET');
-RESO\RESO::setAPIAuthUrl('https://op.api.crmls.org/identity/connect/authorize');
-RESO\RESO::setAPITokenUrl('https://op.api.crmls.org/identity/connect/token');
-RESO\RESO::setAPIRequestUrl('https://h.api.crmls.org/RESO/OData/');
+RESO\Reso::setClientId('YOUR_CLIENT_ID');
+RESO\Reso::setClientSecret('YOUR_CLIENT_SECRET');
+RESO\Reso::setAPIAuthUrl('https://op.api.crmls.org/identity/connect/authorize');
+RESO\Reso::setAPITokenUrl('https://op.api.crmls.org/identity/connect/token');
+RESO\Reso::setAPIRequestUrl('https://h.api.crmls.org/RESO/OData/');
 // Authorize user
 $auth_code = RESO\OpenIDConnect::authorize('YOUR_USERNAME', 'YOUR_PASSWORD', 'https://openid.reso.org/', 'ODataApi');
 // Get access token
-RESO\RESO::setAccessToken(RESO\OpenIDConnect::requestAccessToken($auth_code, 'https://openid.reso.org/', 'ODataApi'));
+RESO\Reso::setAccessToken(RESO\OpenIDConnect::requestAccessToken($auth_code, 'https://openid.reso.org/', 'ODataApi'));
 // Set the Accept header (if needed)
 RESO\Request::setAcceptType("json");
 // Retrieve top 10 properties from the RESO API endpoint
@@ -88,9 +88,9 @@ The SDK has a built-in logger for debug / testing purposes. Usage:
 
 ```php
 // Set logging
-RESO\RESO::setLogEnabled(true); // enables logging in general. Default: false.
-RESO\RESO::setLogConsole(true); // enables log messages to console.
-RESO\RESO::setLogFile(true); // enabled log messages to be written to log file.
+RESO\Reso::setLogEnabled(true); // enables logging in general. Default: false.
+RESO\Reso::setLogConsole(true); // enables log messages to console.
+RESO\Reso::setLogFile(true); // enabled log messages to be written to log file.
 
 ```
 

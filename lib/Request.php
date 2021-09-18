@@ -22,11 +22,11 @@ abstract class Request
      */
     public static function request($request, $output_format = "xml", $decode_json = false)
     {
-        \RESO\RESO::logMessage("Sending request '".$request."' to RESO API.");
+        \RESO\Reso::logMessage("Sending request '".$request."' to RESO API.");
 
         // Get variables
-        $api_request_url = \RESO\RESO::getAPIRequestUrl();
-        $token = \RESO\RESO::getAccessToken();
+        $api_request_url = \RESO\Reso::getAPIRequestUrl();
+        $token = \RESO\Reso::getAccessToken();
 
         if(!in_array($output_format, self::$validOutputFormats)) {
             $output_format = "json";
@@ -90,11 +90,11 @@ abstract class Request
      */
     public static function requestPost($request, $params = array())
     {
-        \RESO\RESO::logMessage("Sending POST request '".$request."' to RESO API.");
+        \RESO\Reso::logMessage("Sending POST request '".$request."' to RESO API.");
 
         // Get variables
-        $api_request_url = \RESO\RESO::getAPIRequestUrl();
-        $token = \RESO\RESO::getAccessToken();
+        $api_request_url = \RESO\Reso::getAPIRequestUrl();
+        $token = \RESO\Reso::getAccessToken();
 
         $curl = new \RESO\HttpClient\CurlClient();
 
@@ -146,7 +146,7 @@ abstract class Request
      * @return True / false output saved to file.
      */
     public static function requestToFile($file_name, $request, $output_format = "xml", $overwrite = false, $accept_format = "json") {
-        \RESO\RESO::logMessage("Sending request '".$request."' to RESO API and storing output to file '".$file_name."'.");
+        \RESO\Reso::logMessage("Sending request '".$request."' to RESO API and storing output to file '".$file_name."'.");
 
         if(!$overwrite && is_file($file_name)) {
             throw new Error\Reso("File '".$file_name."' already exists. Use variable 'overwrite' to overwrite the output file.");
@@ -158,17 +158,17 @@ abstract class Request
 
         $output_data = self::request($request, $output_format, false, $accept_format);
         if(!$output_data) {
-            \RESO\RESO::logMessage("Request output save to file failed - empty or erroneous data.");
+            \RESO\Reso::logMessage("Request output save to file failed - empty or erroneous data.");
             return false;
         }
 
         file_put_contents($file_name, $output_data);
         if(!is_file($file_name)) {
-            \RESO\RESO::logMessage("Request output save to file failed - could not create output file.");
+            \RESO\Reso::logMessage("Request output save to file failed - could not create output file.");
             return false;
         }
 
-        \RESO\RESO::logMessage("Request output save to file succeeded.");
+        \RESO\Reso::logMessage("Request output save to file succeeded.");
         return true;
     }
 
@@ -178,7 +178,7 @@ abstract class Request
      * @return Metadata request output.
      */
     public static function requestMetadata() {
-        \RESO\RESO::logMessage("Requesting resource metadata.");
+        \RESO\Reso::logMessage("Requesting resource metadata.");
         return self::request("\$metadata");
     }
 

@@ -6,11 +6,11 @@ require_once(dirname(__FILE__) . '/../../init.php');
 require_once(dirname(__FILE__) . '/config.php');
 
 // Set variables
-RESO\RESO::setClientId($client_id);
-RESO\RESO::setClientSecret($client_secret);
-RESO\RESO::setAPIAuthUrl($api_auth_url);
-RESO\RESO::setAPITokenUrl($api_token_url);
-RESO\RESO::setAPIRequestUrl($api_request_url);
+RESO\Reso::setClientId($client_id);
+RESO\Reso::setClientSecret($client_secret);
+RESO\Reso::setAPIAuthUrl($api_auth_url);
+RESO\Reso::setAPITokenUrl($api_token_url);
+RESO\Reso::setAPIRequestUrl($api_request_url);
 
 // Set the Accept header (if needed)
 RESO\Request::setAcceptType("json");
@@ -53,7 +53,7 @@ echo '<html>
         </head>
         <center><h1><img src="https://www.reso.org/wp-content/uploads/2016/10/RESO.png" width="160" height="40"> API PHP SDK Web Example</h1>';
 
-        echo '<h4>RESO API PHP SDK version: '.\RESO\RESO::getApiSdkVersion().'<br/>PHP version: '.phpversion().'</h4></center>';
+        echo '<h4>RESO API PHP SDK version: '.\RESO\Reso::getApiSdkVersion().'<br/>PHP version: '.phpversion().'</h4></center>';
 
 // We do have a login request - process it
 if($_POST && isset($_POST['username']) && isset($_POST['password'])) {
@@ -64,7 +64,7 @@ if($_POST && isset($_POST['username']) && isset($_POST['password'])) {
     // Get auth token
     $token = RESO\OpenIDConnect::requestAccessToken($auth_code, $redirect_uri, $scope);
     if(!$token) die("Could not obtain token.");
-    RESO\RESO::setAccessToken($token);
+    RESO\Reso::setAccessToken($token);
 
     // Login successful
     echo '<center><h2>Login successful!</h2>
@@ -97,7 +97,7 @@ else if($_POST && isset($_POST['token']) && strlen($_POST['token']) > 0 && isset
             <h1>Request output:</h1>';
 
     // Set the access token
-    RESO\RESO::setAccessToken($_POST['token']);
+    RESO\Reso::setAccessToken($_POST['token']);
 
     // Process the request
     $data = RESO\Request::request($_POST['request'], $_POST['format']);
