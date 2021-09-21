@@ -5,16 +5,16 @@ namespace RESO\Log;
 abstract class Base
 {
     public static function logMessage($message) {
-        if(!\RESO\RESO::getLogEnabled()) {
+        if(!\RESO\Reso::getLogEnabled()) {
             return false;
         }
 
-        if(\RESO\RESO::getLogConsole()) {
+        if(\RESO\Reso::getLogConsole()) {
             self::logConsole($message);
         }
 
-        if(\RESO\RESO::getLogFile() && \RESO\RESO::getLogFileName()) {
-            self::logFile(\RESO\RESO::getLogFileName(), $message);
+        if(\RESO\Reso::getLogFile() && \RESO\Reso::getLogFileName()) {
+            self::logFile(\RESO\Reso::getLogFileName(), $message);
         }
     }
 

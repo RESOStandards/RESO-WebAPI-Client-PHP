@@ -10,7 +10,7 @@ use RESO\Error;
  *
  * @package RESO
  */
-class RESO
+class Reso
 {
     // @var string The RESO API client_id to be used for auth and query requests.
     public static $clientId;
@@ -47,6 +47,23 @@ class RESO
 
     // @var string Log file name enabled / disabled.
     public static $logFileName = 'out.log';
+
+    // @var string dataset
+    public static $dataset = '';
+
+    /**
+     * @return string
+     */
+    public static function getDataset() {
+        return self::$dataset;
+    }
+
+    /**
+     * @param string $dataset
+     */
+    public static function setDataset($dataset) {
+        self::$dataset = $dataset;
+    }
 
     /**
      * @return string The RESO API client_id used for auth and query requests.

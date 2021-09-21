@@ -22,11 +22,11 @@ class OpenIDConnect
      */
     public static function authorize($username, $password, $redirect_uri, $scope = "ODataApi")
     {
-        \RESO\RESO::logMessage("Initiating RESO API authorization.");
+        \RESO\Reso::logMessage("Initiating RESO API authorization.");
 
         // Get variables
-        $api_auth_url = \RESO\RESO::getAPIAuthUrl();
-        $client_id = \RESO\RESO::getClientId();
+        $api_auth_url = \RESO\Reso::getAPIAuthUrl();
+        $client_id = \RESO\Reso::getClientId();
 
         $curl = new \RESO\HttpClient\CurlClient();
 
@@ -108,12 +108,12 @@ class OpenIDConnect
      */
     public static function requestAccessToken($auth_code, $redirect_uri, $scope = "ODataApi")
     {
-        \RESO\RESO::logMessage("Sending authorization request to retrieve access token.");
+        \RESO\Reso::logMessage("Sending authorization request to retrieve access token.");
 
         // Get variables
-        $api_token_url = \RESO\RESO::getAPITokenUrl();
-        $client_id = \RESO\RESO::getClientId();
-        $client_secret = \RESO\RESO::getClientSecret();
+        $api_token_url = \RESO\Reso::getAPITokenUrl();
+        $client_id = \RESO\Reso::getClientId();
+        $client_secret = \RESO\Reso::getClientSecret();
 
         $curl = new \RESO\HttpClient\CurlClient();
 
@@ -141,13 +141,13 @@ class OpenIDConnect
      */
     public static function requestRefreshToken()
     {
-        \RESO\RESO::logMessage("Requesting refresh token.");
+        \RESO\Reso::logMessage("Requesting refresh token.");
 
         // Get variables
-        $access_token = \RESO\RESO::getAccessToken();
-        $api_token_url = \RESO\RESO::getAPITokenUrl();
-        $client_id = \RESO\RESO::getClientId();
-        $client_secret = \RESO\RESO::getClientSecret();
+        $access_token = \RESO\Reso::getAccessToken();
+        $api_token_url = \RESO\Reso::getAPITokenUrl();
+        $client_id = \RESO\Reso::getClientId();
+        $client_secret = \RESO\Reso::getClientSecret();
 
         $curl = new \RESO\HttpClient\CurlClient();
 
@@ -177,8 +177,8 @@ class OpenIDConnect
     public static function getLoginUrl($redirect_uri, $scope = "ODataApi")
     {
         // Get variables
-        $api_auth_url = \RESO\RESO::getAPIAuthUrl();
-        $client_id = \RESO\RESO::getClientId();
+        $api_auth_url = \RESO\Reso::getAPIAuthUrl();
+        $client_id = \RESO\Reso::getClientId();
 
         // Authentication request parameters
         $params = array(

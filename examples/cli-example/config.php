@@ -24,6 +24,9 @@ $client_secret = "";
 // Redirect URI
 $redirect_uri = "";
 
+// bridge server token
+$server_token = "";
+
 // Scope
 $scope = "ODataApi";
 
