@@ -9,6 +9,7 @@ abstract class Request
 {
     private static $validOutputFormats = array("json", "xml");
     private static $requestAcceptType = "";
+	private static $requestAcceptEncoding = "";
 
     /**
      * Sends GET request and returns output in specified format.
@@ -53,8 +54,24 @@ abstract class Request
             "Authorization: Bearer ".$token
         );
 
+		/// enable GZIP compression for post MLSGRID Api
+		if(self::$requestAcceptEncoding) {
+		 	$headers[] = "Accept-Encoding:".self::$requestAcceptEncoding;
+		}
+
         // Send request
         $response = $curl->request("get", $url, $headers, null, false);
+
+		// Check if the response is gzip compressed
+		if( (isset($response[2]['Content-Encoding']) && $response[2]['Content-Encoding'] == 'gzip') || (isset($response[2]['content-encoding']) && $response[2]['content-encoding'] == 'gzip') ) {
+			// Decode the compressed data
+			$decodedData = gzdecode($response[0]);
+			if($decodedData === false) {
+				throw new Error\Api("Could not decode gzip compressed data.");
+			}
+			$response[0] = $decodedData;
+		}
+
         if(!$response || !is_array($response) || $response[1] != 200) {
             switch($response[1]) {
                 case "406":
@@ -112,6 +129,10 @@ abstract class Request
             "Accept: ".$accept,
             "Authorization: Bearer ".$token
         );
+
+		if(self::$requestAcceptEncoding) {
+		 	$headers[] = "Accept-Encoding:".$requestAcceptEncoding;
+		}
 
         // Send request
         $response = $curl->request("post", $url, $headers, $params, false);
@@ -192,7 +213,7 @@ abstract class Request
             self::$requestAcceptType = $type;
         }
     }
-
+	
     /**
      * Formats request parameters to compatible string
      *
@@ -215,4 +236,14 @@ abstract class Request
 
         return implode("&", $params);
     }
+	
+	/**
+     * Sets accep encoding
+     *
+     * @param string
+     */
+    public static function setAcceptEncoding($encoding = "") {
+       self::$requestAcceptEncoding = $encoding;
+    }
+	
 }
